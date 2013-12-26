@@ -37,7 +37,7 @@ namespace NTransparentArchive.Core
             application.Response.ContentType =
                 Util.GetMimeTypeFromRegistry(
                     archiveEntryName.Split(new[] {'.'}, StringSplitOptions.RemoveEmptyEntries).Last());
-            var archiveName = application.Context.Server.MapPath(string.Format("~/{0}", mostSpecificPath.Value));
+            var archiveName = System.IO.Path.IsPathRooted(mostSpecificPath.Value) ? mostSpecificPath.Value : application.Context.Server.MapPath(string.Format("~/{0}", mostSpecificPath.Value));
             if(!File.Exists(archiveName))
                 return;
             var zip = ZipFile.Read(archiveName);
